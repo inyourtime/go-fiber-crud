@@ -71,8 +71,7 @@ func (s customerService) CreateCustomer(name string, city string, zipcode string
 
 func (s customerService) UpdateCustomer(id int, name string, city string, zipcode string) error {
 
-	err := s.custRepo.UpdateById(id, name, city, zipcode)
-	if err != nil {
+	if err := s.custRepo.UpdateById(id, name, city, zipcode); err != nil {
 		log.Println(err)
 		return err
 	}
@@ -82,8 +81,7 @@ func (s customerService) UpdateCustomer(id int, name string, city string, zipcod
 
 func (s customerService) DeleteCustomer(id int) error {
 
-	err := s.custRepo.DeleteById(id)
-	if err != nil {
+	if err := s.custRepo.DeleteById(id); err != nil {
 		log.Println(err)
 		return err
 	}

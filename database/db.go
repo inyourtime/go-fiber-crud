@@ -1,8 +1,9 @@
-package db
+package database
 
 import (
 	"context"
 	"fmt"
+	"gobasic/repository"
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -17,12 +18,12 @@ type SqlLogger struct {
 
 func (l SqlLogger) Trace(ctx context.Context, begin time.Time, fc func() (sql string, rowsAffected int64), err error) {
 	sql, _ := fc()
-	fmt.Printf("%v\n===================================================\n", sql)
+	fmt.Printf("%v\n===========================================================================\n", sql)
 }
 
 func New() *gorm.DB {
 
-	dsn := "root:boatboat224@tcp(127.0.0.1:3306)/test?parseTime=true"
+	dsn := "root:boatboat224@tcp(127.0.0.1:3306)/go_basic?parseTime=true"
 
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
 		Logger: &SqlLogger{},
@@ -37,5 +38,5 @@ func New() *gorm.DB {
 }
 
 func AutoMigrate(db *gorm.DB) {
-	// db.AutoMigrate(repository.Customer{})
+	db.AutoMigrate(repository.Customer{}, repository.User{})
 }
